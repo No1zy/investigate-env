@@ -13,4 +13,9 @@ services:
     build: 
       context: .
       dockerfile: ./php/Dockerfile
+  python:
+    build: 
+      context: .
+      dockerfile: ./python/Dockerfile
+    
 

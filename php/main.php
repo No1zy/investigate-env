@@ -1,6 +1,6 @@
 <?php
 
-$url = "http://example.com＃@bing.com/ok";
+$url = "http://example.com/ok";
 var_dump(parse_url($url));
 
 

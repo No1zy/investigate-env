@@ -10,7 +10,7 @@ import (
 
 func main() {
 
-	ua := "http://example.com＃@bing.com/ok" //"https://example.com\uFF03bing.com"
+	ua := "http://example.com/ok" //"https://example.com\uFF03bing.com"
 	
 	u, err := url.Parse(ua)
 	if err != nil {

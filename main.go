@@ -34,6 +34,7 @@ func createSourceCode(args *templateArgs) {
 		{"template/template.java", "java/src/main/java/Main.java"},
 		{"template/template.php", "php/main.php"},
 		{"template/template.py", "python/main.py"},
+		{"template/template.rb", "ruby/main.rb"},
 	}
 
 	var (

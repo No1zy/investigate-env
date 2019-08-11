@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  go:
+    build:
+      context: .
+      dockerfile: ./go/Dockerfile
+  java:
+    build:
+      context: .
+      dockerfile: ./java/Dockerfile
+  php:
+    build: 
+      context: .
+      dockerfile: ./php/Dockerfile
+

@@ -9,7 +9,7 @@ import java.net.URL;
 public class Main {
     public static void main(String[] args) {
 
-        String strUrl = "http://example.com＃@bing.com/ok"; //"https://example.com＃@bing.com";
+        String strUrl = "http://example.com/ok"; //"https://example.com＃@bing.com";
         try {
 
             URL url = new URL(strUrl);

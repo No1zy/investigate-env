@@ -17,5 +17,9 @@ services:
     build: 
       context: .
       dockerfile: ./python/Dockerfile
+  ruby:
+    build: 
+      context: .
+      dockerfile: ./ruby/Dockerfile
     
 

@@ -53,5 +53,5 @@ bin
 # vendor/
 
 go/main.go
-java/Main.java
+java/src/main/java/Main.java
 php/main.php

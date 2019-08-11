@@ -1,10 +1,11 @@
 #!/bin/bash
 
 URL=$1
+LANGS=("go" "java" "php")
 
 go run main.go $URL
 docker-compose up --build > /dev/null
-docker-compose logs go
-docker-compose logs java
-docker-compose logs php
+for lang in ${LANGS[@]}; do
+    docker-compose logs $lang
+done
 yes | docker-compose rm -v

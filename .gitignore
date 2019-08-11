@@ -51,3 +51,7 @@ bin
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
+
+go/main.go
+java/Main.java
+php/main.php

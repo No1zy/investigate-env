@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use URI;
 
-$url = 'http://exampel.com/ok';
+$url = 'http://example.com＃@bing.com/ok';
 $u = URI->new($url);
 print 'scheme = ' . $u->scheme . "\n";
 print 'userinfo = ' . $u->userinfo . "\n";

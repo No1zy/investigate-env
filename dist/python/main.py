@@ -1,6 +1,6 @@
 from urllib.parse import urlparse
 
-url = 'http://exampel.com/ok'
+url = 'http://example.com＃@bing.com/ok'
 
 u = urlparse(url)
 

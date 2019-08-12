@@ -25,5 +25,9 @@ services:
     build: 
       context: .
       dockerfile: ${DIST_PREFIX}/perl/Dockerfile
+  node:
+    build: 
+      context: .
+      dockerfile: ${DIST_PREFIX}/node/Dockerfile
     
 

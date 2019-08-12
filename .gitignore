@@ -52,4 +52,4 @@ bin
 # Dependency directories (remove the comment below to include it)
 # vendor/
 
-dist/[mM]ain.*
+dist/*/[mM]ain.*

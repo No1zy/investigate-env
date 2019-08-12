@@ -1,6 +1,6 @@
 require 'uri'
 
-url = "http://exampel.com/ok"
+url = "http://example.com＃@bing.com/ok"
 
 p uri = URI.parse(url)
 

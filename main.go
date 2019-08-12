@@ -33,12 +33,13 @@ func main() {
 // Create source code from template file
 func createSourceCode(args *templateArgs) {
 	FilePath := [][]string{
-		{"template/template.go", DIST_PREFIX + "go/main.go"},
-		{"template/template.java", DIST_PREFIX + "java/src/main/Main.java"},
-		{"template/template.php", DIST_PREFIX + "php/main.php"},
-		{"template/template.py", DIST_PREFIX + "python/main.py"},
-		{"template/template.rb", DIST_PREFIX + "ruby/main.rb"},
-		{"template/template.pl", DIST_PREFIX + "perl/main.pl"},
+		{"template/template.go", DIST_PREFIX + "/go/main.go"},
+		{"template/template.java", DIST_PREFIX + "/java/src/main/Main.java"},
+		{"template/template.php", DIST_PREFIX + "/php/main.php"},
+		{"template/template.py", DIST_PREFIX + "/python/main.py"},
+		{"template/template.rb", DIST_PREFIX + "/ruby/main.rb"},
+		{"template/template.pl", DIST_PREFIX + "/perl/main.pl"},
+		{"template/template.js", DIST_PREFIX + "/node/main.js"},
 	}
 
 	var wg sync.WaitGroup

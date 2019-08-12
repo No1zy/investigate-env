@@ -14,6 +14,8 @@ type templateArgs struct {
 	URL string
 }
 
+const DIST_PREFIX = "dist"
+
 func main() {
 
 	flag.Parse()
@@ -31,12 +33,12 @@ func main() {
 // Create source code from template file
 func createSourceCode(args *templateArgs) {
 	FilePath := [][]string{
-		{"template/template.go", "go/main.go"},
-		{"template/template.java", "java/src/main/Main.java"},
-		{"template/template.php", "php/main.php"},
-		{"template/template.py", "python/main.py"},
-		{"template/template.rb", "ruby/main.rb"},
-		{"template/template.pl", "perl/main.pl"},
+		{"template/template.go", DIST_PREFIX + "go/main.go"},
+		{"template/template.java", DIST_PREFIX + "java/src/main/Main.java"},
+		{"template/template.php", DIST_PREFIX + "php/main.php"},
+		{"template/template.py", DIST_PREFIX + "python/main.py"},
+		{"template/template.rb", DIST_PREFIX + "ruby/main.rb"},
+		{"template/template.pl", DIST_PREFIX + "perl/main.pl"},
 	}
 
 	var wg sync.WaitGroup

@@ -1,7 +1,7 @@
 FROM python:latest
 
 WORKDIR /python
-ADD ./python /python
+ADD dist/python /python
 
 CMD ["python", "main.py"]
 

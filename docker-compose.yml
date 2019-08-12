@@ -4,26 +4,26 @@ services:
   go:
     build:
       context: .
-      dockerfile: ./go/Dockerfile
+      dockerfile: ${DIST_PREFIX}/go/Dockerfile
   java:
     build:
       context: .
-      dockerfile: ./java/Dockerfile
+      dockerfile: ${DIST_PREFIX}/java/Dockerfile
   php:
     build: 
       context: .
-      dockerfile: ./php/Dockerfile
+      dockerfile: ${DIST_PREFIX}/php/Dockerfile
   python:
     build: 
       context: .
-      dockerfile: ./python/Dockerfile
+      dockerfile: ${DIST_PREFIX}/python/Dockerfile
   ruby:
     build: 
       context: .
-      dockerfile: ./ruby/Dockerfile
+      dockerfile: ${DIST_PREFIX}/ruby/Dockerfile
   perl:
     build: 
       context: .
-      dockerfile: ./perl/Dockerfile
+      dockerfile: ${DIST_PREFIX}/perl/Dockerfile
     
 

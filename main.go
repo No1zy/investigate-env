@@ -28,6 +28,7 @@ func main() {
 	createSourceCode(templateArgs)
 }
 
+// Create source code from template file
 func createSourceCode(args *templateArgs) {
 	FilePath := [][]string{
 		{"template/template.go", "go/main.go"},
@@ -48,21 +49,12 @@ func createSourceCode(args *templateArgs) {
 		go func(src string, dist string) {
 			defer wg.Done()
 
-			if fileExists(src) {
-				f, err := os.Open(src)
-				if err != nil {
-					log.Fatal(err)
-				}
-				defer f.Close()
-				buf, err := ioutil.ReadAll(f)
-				if err != nil {
-					log.Fatal(err)
-				}
-				templateText = string(buf)
+			tpl, err :=  template.ParseFiles(src)
+
+			if err != nil {
+				log.Fatal(err)
 			}
-
-			tpl := template.Must(template.New("template").Parse(templateText))
-
+			
 			buf := new(bytes.Buffer)
 
 			if err := tpl.Execute(buf, args); err != nil {

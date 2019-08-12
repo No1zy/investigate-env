@@ -1,7 +1,7 @@
 FROM golang:latest
 
 WORKDIR /go
-ADD ./go /go
+ADD dist/go /go
 
 CMD ["go", "run", "main.go"]
 

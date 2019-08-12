@@ -1,7 +1,7 @@
 #!/bin/bash
 
 URL=$1
-LANGS=("go" "java" "php" "python" "ruby")
+LANGS=("go" "java" "php" "python" "ruby" "perl")
 
 go run main.go $URL
 docker-compose up --build > /dev/null

@@ -32,16 +32,14 @@ func main() {
 func createSourceCode(args *templateArgs) {
 	FilePath := [][]string{
 		{"template/template.go", "go/main.go"},
-		{"template/template.java", "java/src/main/java/Main.java"},
+		{"template/template.java", "java/src/main/Main.java"},
 		{"template/template.php", "php/main.php"},
 		{"template/template.py", "python/main.py"},
 		{"template/template.rb", "ruby/main.rb"},
+		{"template/template.pl", "perl/main.pl"},
 	}
 
-	var (
-		templateText string
-		wg           sync.WaitGroup
-	)
+	var wg sync.WaitGroup
 
 	for _, path := range FilePath {
 		wg.Add(1)
@@ -49,12 +47,12 @@ func createSourceCode(args *templateArgs) {
 		go func(src string, dist string) {
 			defer wg.Done()
 
-			tpl, err :=  template.ParseFiles(src)
+			tpl, err := template.ParseFiles(src)
 
 			if err != nil {
 				log.Fatal(err)
 			}
-			
+
 			buf := new(bytes.Buffer)
 
 			if err := tpl.Execute(buf, args); err != nil {

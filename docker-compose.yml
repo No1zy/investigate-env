@@ -21,5 +21,9 @@ services:
     build: 
       context: .
       dockerfile: ./ruby/Dockerfile
+  perl:
+    build: 
+      context: .
+      dockerfile: ./perl/Dockerfile
     
 

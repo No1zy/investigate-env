@@ -52,8 +52,9 @@ bin
 # Dependency directories (remove the comment below to include it)
 # vendor/
 
-main.go
+go/main.go
 Main.java
 main.php
 main.py
 main.rb
+main.pl

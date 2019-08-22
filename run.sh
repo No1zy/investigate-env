@@ -9,3 +9,4 @@ for lang in ${LANGS[@]}; do
     docker-compose logs $lang
 done
 yes | docker-compose rm -v
+sudo docker rmi $(sudo docker images | egrep '^<none>' | awk '{print $3}')

@@ -7,7 +7,9 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"os/exec"
 	"path/filepath"
+	"regexp"
 	"sync"
 	"text/template"
 )
@@ -66,10 +68,14 @@ func main() {
 
 	var exts []string
 
+	commandArgs := []string{"up"}
+
 	if lang != nil {
 		for _, l := range langs {
 			if *lang == l {
 				exts = append(exts, getExtFromLang(l))
+				commandArgs = append(commandArgs, "--build")
+				commandArgs = append(commandArgs, l)
 			}
 		}
 	} else {
@@ -111,6 +117,13 @@ func main() {
 	templateArgs := &templateArgs{args[0]}
 
 	createSourceCode(templateArgs, path)
+
+	_, err = exec.Command("docker-compose", commandArgs...).Output()
+	if err != nil {
+		log.Fatal("Failed build :" + err.Error())
+	}
+
+	printLogDockerCompose(exts)
 }
 
 // Create source code from template file
@@ -166,4 +179,74 @@ func getExtFromLang(lang string) string {
 	}
 
 	return exts[lang]
+}
+
+func getLangFromExt(ext string) string {
+	exts := map[string]string{
+		"go":   "go",
+		"java": "java",
+		"php":  "php",
+		"py":   "python",
+		"rb":   "ruby",
+		"pl":   "perl",
+		"js":   "node",
+	}
+
+	return exts[ext]
+
+}
+
+func printLogDockerCompose(exts []string) {
+
+	for _, e := range exts {
+		out, err := exec.Command("docker-compose", "logs", getLangFromExt(e)).Output()
+
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		fmt.Printf("%s", out)
+	}
+
+	removeDockerCompose()
+	removeDockerImages()
+
+}
+
+func removeDockerCompose() {
+	cmd := exec.Command("docker-compose", "rm", "-fv")
+
+	cmd.Start()
+	fmt.Println("Removing container...")
+	cmd.Wait()
+}
+
+func removeDockerImages() {
+
+	images, err := exec.Command("sudo", "docker", "images").Output()
+
+	regNone := regexp.MustCompile(`<none>.*([0-9abcdef]{12})`)
+	regId := regexp.MustCompile(`([0-9abcdef]{12})`)
+	res := regNone.FindAll(images, -1)
+
+	var ids [][]byte
+
+	for _, b := range res {
+		findId := regId.Find(b)
+		ids = append(ids, findId)
+	}
+
+	if len(ids) < 1 {
+		return
+	}
+
+	var out []byte
+	for _, id := range ids {
+		out, err = exec.Command("sudo", "docker", "rmi", string(id)).Output()
+	}
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Printf("%s", out)
 }

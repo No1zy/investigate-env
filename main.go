@@ -68,13 +68,12 @@ func main() {
 
 	var exts []string
 
-	commandArgs := []string{"up"}
+	commandArgs := []string{"up", "--build"}
 
 	if len(*lang) > 1 {
 		for _, l := range langs {
 			if *lang == l {
 				exts = append(exts, getExtFromLang(l))
-				commandArgs = append(commandArgs, "--build")
 				commandArgs = append(commandArgs, l)
 			}
 		}

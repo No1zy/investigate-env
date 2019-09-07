@@ -3,9 +3,11 @@ package main
 import (
 	"bytes"
 	"flag"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
+	"path/filepath"
 	"sync"
 	"text/template"
 )
@@ -18,33 +20,105 @@ const DIST_PREFIX = "dist"
 
 func main() {
 
+	distPath := map[string]string{
+		"go":   DIST_PREFIX + "/go/main.go",
+		"java": DIST_PREFIX + "/java/src/main/Main.java",
+		"php":  DIST_PREFIX + "/php/main.php",
+		"py":   DIST_PREFIX + "/python/main.py",
+		"rb":   DIST_PREFIX + "/ruby/main.rb",
+		"pl":   DIST_PREFIX + "/perl/main.pl",
+		"js":   DIST_PREFIX + "/node/main.js",
+	}
+
+	var lang = flag.String("lang", "",
+		"Specify the language you want to test")
+	var templateDir = flag.String("template", "template",
+		"Specify the template directory to use")
+
 	flag.Parse()
 	args := flag.Args()
 
 	if len(args) == 0 {
 		log.Fatal("引数にはURLを指定してください")
+		return
+	}
+
+	if templateDir == nil {
+		fmt.Println("テンプレートファイルが含まれるディレクトリを指定してください")
+		return
+	}
+
+	files, err := ioutil.ReadDir(*templateDir)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	langs := []string{
+		"go",
+		"java",
+		"php",
+		"python",
+		"ruby",
+		"perl",
+		"node",
+	}
+
+	var exts []string
+
+	if lang != nil {
+		for _, l := range langs {
+			if *lang == l {
+				exts = append(exts, getExtFromLang(l))
+			}
+		}
+	} else {
+		exts = []string{
+			"go",
+			"java",
+			"php",
+			"py",
+			"rb",
+			"pl",
+			"js",
+		}
+	}
+
+	if len(exts) < 1 {
+		fmt.Println("--lang 引数には対応している言語を指定してください: go, java, php, python, ruby, perl, javascript")
+		return
+	}
+
+	path := [][]string{}
+
+	for _, f := range files {
+		for _, e := range exts {
+			if filepath.Ext(f.Name())[1:] == e {
+				tmp := []string{
+					filepath.Join(*templateDir, f.Name()),
+					distPath[e],
+				}
+				path = append(path, tmp)
+			}
+		}
+	}
+
+	if len(path) < 1 {
+		fmt.Println("指定された言語のテンプレートを取得できませんでした。")
+		return
 	}
 
 	templateArgs := &templateArgs{args[0]}
 
-	createSourceCode(templateArgs)
+	createSourceCode(templateArgs, path)
 }
 
 // Create source code from template file
-func createSourceCode(args *templateArgs) {
-	FilePath := [][]string{
-		{"template/template.go", DIST_PREFIX + "/go/main.go"},
-		{"template/template.java", DIST_PREFIX + "/java/src/main/Main.java"},
-		{"template/template.php", DIST_PREFIX + "/php/main.php"},
-		{"template/template.py", DIST_PREFIX + "/python/main.py"},
-		{"template/template.rb", DIST_PREFIX + "/ruby/main.rb"},
-		{"template/template.pl", DIST_PREFIX + "/perl/main.pl"},
-		{"template/template.js", DIST_PREFIX + "/node/main.js"},
-	}
+func createSourceCode(args *templateArgs, filePath [][]string) {
 
 	var wg sync.WaitGroup
 
-	for _, path := range FilePath {
+	for _, path := range filePath {
 		wg.Add(1)
 
 		go func(src string, dist string) {
@@ -78,4 +152,18 @@ func fileExists(filename string) bool {
 		return false
 	}
 	return !info.IsDir()
+}
+
+func getExtFromLang(lang string) string {
+	exts := map[string]string{
+		"go":     "go",
+		"java":   "java",
+		"php":    "php",
+		"python": "py",
+		"ruby":   "rb",
+		"perl":   "pl",
+		"node":   "js",
+	}
+
+	return exts[lang]
 }

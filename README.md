@@ -47,7 +47,7 @@ url = '{{ .URL }}'
 print(url)
 ```
 
-指定した変数はconfig/var.goファイルのVariable構造体として定義してください
+指定した変数はconfig/var.goファイルのVariable構造体として定義してください  
 **構造体のメンバ名とテンプレートの変数名は同じにしてください。**
 
 ```go

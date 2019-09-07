@@ -70,7 +70,7 @@ func main() {
 
 	commandArgs := []string{"up"}
 
-	if lang != nil {
+	if len(*lang) > 1 {
 		for _, l := range langs {
 			if *lang == l {
 				exts = append(exts, getExtFromLang(l))
@@ -243,10 +243,12 @@ func removeDockerImages() {
 	var out []byte
 	for _, id := range ids {
 		out, err = exec.Command("sudo", "docker", "rmi", string(id)).Output()
-	}
-	if err != nil {
-		log.Fatal(err)
+
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		fmt.Printf("%s", out)
 	}
 
-	fmt.Printf("%s", out)
 }

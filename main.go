@@ -12,11 +12,8 @@ import (
 	"regexp"
 	"sync"
 	"text/template"
+	"github.com/No1zy/investigate-env/config"
 )
-
-type templateArgs struct {
-	URL string
-}
 
 const DIST_PREFIX = "dist"
 
@@ -113,7 +110,7 @@ func main() {
 		return
 	}
 
-	templateArgs := &templateArgs{args[0]}
+	templateArgs := &config.Variable{args[0]}
 
 	createSourceCode(templateArgs, path)
 
@@ -126,7 +123,7 @@ func main() {
 }
 
 // Create source code from template file
-func createSourceCode(args *templateArgs, filePath [][]string) {
+func createSourceCode(args *config.Variable, filePath [][]string) {
 
 	var wg sync.WaitGroup
 

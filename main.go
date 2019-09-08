@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"flag"
 	"fmt"
+	"github.com/No1zy/investigate-env/config"
 	"io/ioutil"
 	"log"
 	"os"
@@ -12,7 +13,6 @@ import (
 	"regexp"
 	"sync"
 	"text/template"
-	"github.com/No1zy/investigate-env/config"
 )
 
 const DIST_PREFIX = "dist"
@@ -29,8 +29,8 @@ func main() {
 		"js":   DIST_PREFIX + "/node/main.js",
 	}
 
-	var lang = flag.String("lang", "",
-		"Specify the language you want to test")
+	var lang = flag.String("service", "",
+		"Specify the service you want to test")
 	var templateDir = flag.String("template", "template",
 		"Specify the template directory to use")
 
@@ -53,25 +53,19 @@ func main() {
 		log.Fatal(err)
 	}
 
-	langs := []string{
-		"go",
-		"java",
-		"php",
-		"python",
-		"ruby",
-		"perl",
-		"node",
-	}
+	loadConfig()
+
+	services := config.Conf.Services
 
 	var exts []string
 
 	commandArgs := []string{"up", "--build"}
 
 	if len(*lang) > 1 {
-		for _, l := range langs {
-			if *lang == l {
-				exts = append(exts, getExtFromLang(l))
-				commandArgs = append(commandArgs, l)
+		for _, l := range services {
+			if *lang == l.Name {
+				exts = append(exts, getExtFromLang(l.Name))
+				commandArgs = append(commandArgs, l.Name)
 			}
 		}
 	} else {
@@ -87,7 +81,7 @@ func main() {
 	}
 
 	if len(exts) < 1 {
-		fmt.Println("--lang 引数には対応している言語を指定してください: go, java, php, python, ruby, perl, javascript")
+		fmt.Println("--service 引数には対応している言語を指定してください: default: java, php, python, ruby, perl, javascript")
 		return
 	}
 
@@ -250,4 +244,12 @@ func removeDockerImages() {
 		fmt.Printf("%s", out)
 	}
 
+}
+
+// load config
+func loadConfig() {
+	err := config.Load("docker-compose.yml")
+	if err != nil {
+		log.Fatal(err)
+	}
 }

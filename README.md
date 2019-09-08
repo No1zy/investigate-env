@@ -19,10 +19,10 @@
 go run main.go [Payload]
 ```
 
-サービスを指定する場合は`--lang` オプションを指定してください  
+サービスを指定する場合は`--service` オプションを指定してください  
 
 ```sh
-go run main.go --lang python [Payload]
+go run main.go --service python [Payload]
 ```
 
 
@@ -60,7 +60,7 @@ type Variable struct {
 
 オリジナルのテンプレートを指定する場合は`--template`を使用してください  
 ```sh
-$ go run main.go --lang python --template mytemplate http://example.com/
+$ go run main.go --service python --template mytemplate http://example.com/
 Attaching to investigate-env_python_1
 python_1  | http://example.com/
 Removing container...

@@ -120,6 +120,8 @@ func main() {
 	}
 
 	printLogDockerCompose(exts)
+	removeDockerCompose()
+	removeDockerImages()
 }
 
 // Create source code from template file
@@ -163,6 +165,7 @@ func fileExists(filename string) bool {
 	return !info.IsDir()
 }
 
+// Get the language corresponding to the extension.
 func getExtFromLang(lang string) string {
 	exts := map[string]string{
 		"go":     "go",
@@ -177,6 +180,7 @@ func getExtFromLang(lang string) string {
 	return exts[lang]
 }
 
+// Get the extension corresponding to the language.
 func getLangFromExt(ext string) string {
 	exts := map[string]string{
 		"go":   "go",
@@ -192,6 +196,7 @@ func getLangFromExt(ext string) string {
 
 }
 
+// print logs on each container
 func printLogDockerCompose(exts []string) {
 
 	for _, e := range exts {
@@ -203,12 +208,9 @@ func printLogDockerCompose(exts []string) {
 
 		fmt.Printf("%s", out)
 	}
-
-	removeDockerCompose()
-	removeDockerImages()
-
 }
 
+// remove containers
 func removeDockerCompose() {
 	cmd := exec.Command("docker-compose", "rm", "-fv")
 
@@ -217,6 +219,7 @@ func removeDockerCompose() {
 	cmd.Wait()
 }
 
+// remove docker images
 func removeDockerImages() {
 
 	images, err := exec.Command("sudo", "docker", "images").Output()

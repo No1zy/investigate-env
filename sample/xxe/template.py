@@ -1,3 +1,9 @@
-url = '{{ .URL }}'
+import xml.etree.ElementTree as ET
 
-print(url)
+filename = '{{ .FILENAME }}'
+
+tree = ET.parse(filename)
+root = tree.getroot()
+
+for child in root:
+    print(child.tag, child.attrib)

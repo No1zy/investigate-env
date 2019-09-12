@@ -5,8 +5,8 @@
 * python
 
 ## example
-specify xml file
+Specify xml file in `data` directory.
 
 ```xml
-go run main.go --service java --template sample/xxe/ test.xml
+go run main.go --service java --template sample/xxe/ data/xxe/test.xml
 ```

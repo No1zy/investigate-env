@@ -1,4 +1,4 @@
-FROM php:5.6.40
+FROM php:latest
 
 WORKDIR /php
 ADD dist/php /php

@@ -6,6 +6,7 @@ import (
 	"net/url"
 	"net/http"
 	//"io/ioutil"
+	"net"
 )
 
 func main() {
@@ -27,7 +28,10 @@ func main() {
 	fmt.Printf("RawPath: %v\n", u.RawPath)
 	fmt.Printf("RawQuery: %v\n", u.RawQuery)
 	fmt.Printf("Fragment: %v\n", u.Fragment)
-	
+
+	conn, err := net.Dial("tcp", ":80")
+
+	fmt.Printf("%v", conn)
 	resp, err := http.Get("http://" + u.Host)
 
 	if err != nil {

@@ -3,20 +3,21 @@ package main
 import (
 	"fmt"
 	"log"
-	"net/url"
 	"net/http"
+	"net/url"
 	//"io/ioutil"
+	"net"
 )
 
 func main() {
 
 	ua := "{{ .URL }}" //"https://example.com\uFF03bing.com"
-	
+
 	u, err := url.Parse(ua)
 	if err != nil {
 		log.Fatal(err)
 	}
-	
+
 	fmt.Printf("URL: %v\n", u.String())
 	fmt.Printf("Scheme: %v\n", u.Scheme)
 	fmt.Printf("Opaque: %v\n", u.Opaque)
@@ -27,7 +28,10 @@ func main() {
 	fmt.Printf("RawPath: %v\n", u.RawPath)
 	fmt.Printf("RawQuery: %v\n", u.RawQuery)
 	fmt.Printf("Fragment: %v\n", u.Fragment)
-	
+
+	conn, err := net.Dial("tcp", ":80")
+
+	fmt.Printf("%v", conn)
 	resp, err := http.Get("http://" + u.Host)
 
 	if err != nil {
@@ -36,10 +40,10 @@ func main() {
 
 	defer resp.Body.Close()
 	/*
-	body, err := ioutil.ReadAll(resp.Body)
+		body, err := ioutil.ReadAll(resp.Body)
 
-	if err != nil {
-		log.Fatal(err)
-	}
+		if err != nil {
+			log.Fatal(err)
+		}
 	*/
 }

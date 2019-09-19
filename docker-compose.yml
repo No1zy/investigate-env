@@ -29,5 +29,32 @@ services:
     build: 
       context: .
       dockerfile: ${DIST_PREFIX}/node/Dockerfile
-    
-
+  rails:
+    build: 
+      context: .
+      dockerfile: ${DIST_PREFIX}/rails/Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      MYSQL_ROOT_USER: 'root'
+      MYSQL_ROOT_PASSWORD: 'mysql'
+      APP_DATABASE: 'app_development'
+      APP_DATABASE_USER: 'app'
+      APP_DATABASE_PASSWORD: 'development'
+    depends_on:
+      - mysql
+  mysql:
+    build: 
+      context: .
+      dockerfile: ${DIST_PREFIX}/mysql/Dockerfile
+    container_name: 'mysql'
+    environment:
+      MYSQL_ROOT_USER: 'root'
+      MYSQL_ROOT_PASSWORD: 'mysql'
+      MYSQL_DATABASE: 'app_development'
+      MYSQL_USER: 'app'
+      MYSQL_PASSWORD: 'development'
+    ports:
+      - '3306:3306'
+    volumes:
+      - ./mysql/db:/docker-entrypoint-initdb.d

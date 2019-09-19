@@ -53,3 +53,8 @@ bin
 # vendor/
 
 dist/*/[mM]ain.*
+dist/*/*
+!dist/*/Dockerfile
+!dist/*/entrypoint.sh
+!dist/rails/Gemfile
+

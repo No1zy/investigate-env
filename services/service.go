@@ -5,7 +5,10 @@ import (
 	"github.com/pkg/errors"
 	"log"
 	"os/exec"
+	// "bytes"
 	"regexp"
+	"sync"
+	"time"
 )
 
 type property struct {
@@ -48,12 +51,40 @@ func (p *property) IsValidName(name string) bool {
 }
 
 func (p *property) Start(args []string) {
-	cmd := exec.Command("docker-compose", args...)
-
-	if err := cmd.Start(); err != nil {
-		log.Fatal(err)
+	if len(args) < 3 {
+		for _, srv := range p.services {
+			args = append(args, srv.Name)
+		}
 	}
-	cmd.Wait()
+
+	var wg sync.WaitGroup
+
+	for _, srv := range args[2:] {
+		wg.Add(1)
+	
+		go func(s string) {
+			defer wg.Done()
+			
+			command := append(args[:2], s)
+			cmd := exec.Command("docker-compose", command...)
+			// var stdout bytes.Buffer
+			// cmd.Stdout = &stdout
+			
+			if err := cmd.Start(); err != nil {
+				log.Fatal("CommandERR: " + err.Error())
+			}
+			var timer *time.Timer
+			timer = time.AfterFunc(30 * time.Second, func() {
+				timer.Stop()
+				cmd.Process.Kill()
+			})
+			cmd.Wait()
+			// fmt.Println(stdout.String())
+		}(srv)
+	}
+
+	wg.Wait()
+
 }
 
 // remove containers
@@ -97,7 +128,6 @@ func removeDockerImages() {
 
 		fmt.Printf("%s", out)
 	}
-
 }
 
 // print logs on each container

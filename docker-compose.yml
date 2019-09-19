@@ -43,7 +43,6 @@ services:
       APP_DATABASE_PASSWORD: 'development'
     depends_on:
       - mysql
-
   mysql:
     build: 
       context: .

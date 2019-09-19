@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 	"log"
-	"net/url"
 	"net/http"
+	"net/url"
 	//"io/ioutil"
 	"net"
 )
@@ -12,12 +12,12 @@ import (
 func main() {
 
 	ua := "{{ .URL }}" //"https://example.com\uFF03bing.com"
-	
+
 	u, err := url.Parse(ua)
 	if err != nil {
 		log.Fatal(err)
 	}
-	
+
 	fmt.Printf("URL: %v\n", u.String())
 	fmt.Printf("Scheme: %v\n", u.Scheme)
 	fmt.Printf("Opaque: %v\n", u.Opaque)
@@ -40,10 +40,10 @@ func main() {
 
 	defer resp.Body.Close()
 	/*
-	body, err := ioutil.ReadAll(resp.Body)
+		body, err := ioutil.ReadAll(resp.Body)
 
-	if err != nil {
-		log.Fatal(err)
-	}
+		if err != nil {
+			log.Fatal(err)
+		}
 	*/
 }

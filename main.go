@@ -10,8 +10,6 @@ import (
 	"sync"
 )
 
-const DIST_PREFIX = "dist"
-
 func main() {
 
 	var lang = flag.String("service", "",
@@ -46,10 +44,11 @@ func main() {
 			return
 		}
 	}
-	
+
 	filePath, err := srvs.ReadTemplateDir(*templateDir)
 
 	if err != nil {
+		fmt.Println("read template error")
 		log.Fatal(err)
 	}
 
@@ -70,14 +69,15 @@ func main() {
 		wg.Wait()
 	}
 
-
 	srvs.Start(commandArgs)
+
 	if len(commandArgs) > 2 {
 		srvs.Log(commandArgs[2:])
+	} else {
+		srvs.Log(nil)
 	}
 	srvs.Remove()
 }
-
 
 // fileExists checks if a file exists and is not a directory before we
 // try using it to prevent further errors.

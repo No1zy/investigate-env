@@ -10,6 +10,9 @@
 * Perl
 * Nodejs
 
+フレームワーク
+* Ruby on Rails
+
 # How to Use
 
 ## 基本的な使い方
@@ -56,6 +59,33 @@ print(url)
 type Variable struct {
     URL string
 }
+```
+
+オリジナルのテンプレートを作るときはディレクトリ構成は以下のように**検証したいサービスのディレクトリを作成するように**してください
+
+```
+mytemplate
+├── go
+│   └── main.go
+├── java
+│   └── Main.java
+├── node
+│   └── main.js
+├── perl
+│   └── main.pl
+├── php
+│   └── main.php
+├── python
+│   └── main.py
+├── rails
+│   ├── Gemfile
+│   ├── README.md
+│   ├── Rakefile
+│   ├── app
+│   ...
+│
+└── ruby
+    └── main.rb
 ```
 
 オリジナルのテンプレートを指定する場合は`--template`を使用してください  

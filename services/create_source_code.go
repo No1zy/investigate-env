@@ -66,7 +66,6 @@ func CreateSourceCode(src, dist string, args *config.Variable) {
 }
 
 func recursiveMkDir(src, pathParts string, service *service) [][]string {
-	fmt.Printf("pathParts: %v\n", pathParts)
 	target := filepath.Join(src, pathParts)
 	files, err := ioutil.ReadDir(target)
 	
@@ -84,7 +83,6 @@ func recursiveMkDir(src, pathParts string, service *service) [][]string {
 			path = append(path, recursiveMkDir(src, filepath.Join(pathParts, f.Name()), service)...)
 			continue
 		}
-		fmt.Printf("path: %v\n", filepath.Join(service.Dist, pathParts, f.Name()))
 		tmp := []string{
 			filepath.Join(src, pathParts, f.Name()),
 			filepath.Join(service.Dist, pathParts, f.Name()),

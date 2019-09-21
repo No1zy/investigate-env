@@ -1,7 +1,8 @@
 FROM ruby:latest
 
 WORKDIR /usr/src/app
-COPY /dist/rails/Gemfile* ./
+COPY ./dist/rails/Gemfile* ./
+COPY ./dist/rails/entrypoint.sh .
 COPY ./dist/rails/rails .
 
 RUN chmod 755 entrypoint.sh \

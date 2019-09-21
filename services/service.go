@@ -26,7 +26,8 @@ type Daemon interface {
 	Remove()
 	Log([]string)
 	IsValidName(string) bool
-	ReadTemplateDir(string) ([][]string, error)
+	ReadTemplateDir(string, []string) ([][]string, error)
+	GetService(string) *service
 }
 
 func New(opts ...Option) (Daemon, error) {
@@ -150,4 +151,13 @@ func printLog(name string) {
 		log.Fatal(err)
 	}
 	fmt.Printf("%s\n", out)
+}
+
+func (p *property) GetService(name string) *service {
+	for _, srv := range p.services {
+		if name == srv.Name {
+			return &srv
+		}
+	}
+	return nil
 }

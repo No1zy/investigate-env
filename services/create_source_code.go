@@ -11,8 +11,16 @@ import (
 	"os"
 )
 
-func (p *property) ReadTemplateDir(src string) ([][]string, error) {
+func (p *property) ReadTemplateDir(src string, langs []string) ([][]string, error) {
 
+	var targets []string
+	if len(langs) < 1 {
+		for _, srv := range p.services {
+			targets = append(targets, srv.Name)
+		}
+	} else {
+		targets = langs
+	}
 
 	dirs, err := ioutil.ReadDir(src)
 
@@ -24,8 +32,10 @@ func (p *property) ReadTemplateDir(src string) ([][]string, error) {
 	var path [][]string
 
 	for _, d := range dirs {
-		for _, srv := range p.services {
-			path = append(path, recursiveMkDir(filepath.Join(src, d.Name()), &srv)...)
+		for _, target := range targets {
+			if d.Name() == target {
+				path = append(path, recursiveMkDir(src, d.Name(), p.GetService(target))...)
+			}
 		}
 	}
 
@@ -53,12 +63,12 @@ func CreateSourceCode(src, dist string, args *config.Variable) {
 	}
 
 	ioutil.WriteFile(dist, buf.Bytes(), 0655)
-
-
 }
 
-func recursiveMkDir(src string, service *service) [][]string {
-	files, err := ioutil.ReadDir(src)
+func recursiveMkDir(src, pathParts string, service *service) [][]string {
+	fmt.Printf("pathParts: %v\n", pathParts)
+	target := filepath.Join(src, pathParts)
+	files, err := ioutil.ReadDir(target)
 	
 	if err != nil {
 		log.Fatal(err)
@@ -68,19 +78,18 @@ func recursiveMkDir(src string, service *service) [][]string {
 	
 	for _, f := range files {
 		if f.IsDir() {
-			if _, err := os.Stat(f.Name()); err != nil {
-				os.Mkdir(filepath.Join(service.Dist, src, f.Name()), 0755)
-			}
-			path = append(path, recursiveMkDir(filepath.Join(src, f.Name()), service)...)
+			if err := os.MkdirAll(filepath.Join(service.Dist, pathParts, f.Name()), 0755); err != nil {
+			        fmt.Println(err)
+			    }
+			path = append(path, recursiveMkDir(src, filepath.Join(pathParts, f.Name()), service)...)
 			continue
 		}
-		if f.Name() == service.Name {
-			tmp := []string{
-				filepath.Join(src, service.Name),
-				service.Dist,
-			}
-			path = append(path, tmp)
+		fmt.Printf("path: %v\n", filepath.Join(service.Dist, pathParts, f.Name()))
+		tmp := []string{
+			filepath.Join(src, pathParts, f.Name()),
+			filepath.Join(service.Dist, pathParts, f.Name()),
 		}
+		path = append(path, tmp)
 	}
 	return path
 }

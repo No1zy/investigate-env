@@ -8,6 +8,7 @@ import (
 	"log"
 	"os"
 	"sync"
+	"strings"
 )
 
 func main() {
@@ -36,16 +37,20 @@ func main() {
 
 	commandArgs := []string{"up", "--build"}
 
+	var langs []string
 	if len(*lang) > 1 {
-		if srvs.IsValidName(*lang) {
-			commandArgs = append(commandArgs, *lang)
-		} else {
-			fmt.Println("Invalid service")
-			return
+		langs = strings.Split(*lang, ",")
+		for _, l := range langs {
+			if srvs.IsValidName(l) {
+				commandArgs = append(commandArgs, l)
+			} else {
+				fmt.Println("Invalid service")
+				return
+			}
 		}
 	}
 
-	filePath, err := srvs.ReadTemplateDir(*templateDir)
+	filePath, err := srvs.ReadTemplateDir(*templateDir, langs)
 
 	if err != nil {
 		fmt.Println("read template error")

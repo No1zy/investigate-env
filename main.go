@@ -17,13 +17,14 @@ func main() {
 		"Specify the service you want to test")
 	var templateDir = flag.String("template", "template",
 		"Specify the template directory to use")
+	var createSourceCodeFlag = flag.Bool("only-create-source", false, "Only create source code, not build docker compose.")
 
+	
 	flag.Parse()
 	args := flag.Args()
 
-	if len(args) == 0 {
-		log.Fatal("引数を指定してください")
-		return
+	if len(args) < 1 {
+		args = []string{""}
 	}
 
 	if templateDir == nil {
@@ -74,14 +75,16 @@ func main() {
 		wg.Wait()
 	}
 
-	srvs.Start(commandArgs)
+	if !*createSourceCodeFlag {
+		srvs.Start(commandArgs)
 
-	if len(commandArgs) > 2 {
-		srvs.Log(commandArgs[2:])
-	} else {
-		srvs.Log(nil)
+		if len(commandArgs) > 2 {
+			srvs.Log(commandArgs[2:])
+		} else {
+			srvs.Log(nil)
+		}
+		srvs.Remove()
 	}
-	srvs.Remove()
 }
 
 // fileExists checks if a file exists and is not a directory before we

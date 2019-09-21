@@ -29,6 +29,8 @@ services:
     build: 
       context: .
       dockerfile: ${DIST_PREFIX}/node/Dockerfile
+    ports:
+      - "3000:3000"
   rails:
     build: 
       context: .
@@ -58,3 +60,9 @@ services:
       - '3306:3306'
     volumes:
       - ./mysql/db:/docker-entrypoint-initdb.d
+  php-apache:
+    build: 
+      context: .
+      dockerfile: ${DIST_PREFIX}/php-apache/Dockerfile
+    ports:
+      - '8001:8001'

@@ -80,12 +80,12 @@ func recursiveMkDir(src, pathParts string, service *service) [][]string {
 			if err := os.MkdirAll(filepath.Join(service.Dist, pathParts, f.Name()), 0755); err != nil {
 			        fmt.Println(err)
 			    }
-			path = append(path, recursiveMkDir(src, filepath.Join(pathParts, f.Name()), service)...)
+			path = append(path, recursiveMkDir(src, filepath.Join(pathParts[len(service.Name):], f.Name()), service)...)
 			continue
 		}
 		tmp := []string{
 			filepath.Join(src, pathParts, f.Name()),
-			filepath.Join(service.Dist, pathParts, f.Name()),
+			filepath.Join(service.Dist, pathParts[len(service.Name):], f.Name()),
 		}
 		path = append(path, tmp)
 	}

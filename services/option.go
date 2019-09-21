@@ -11,6 +11,7 @@ var (
 		service{"perl", "pl", distPrefix + "/perl/"},
 		service{"node", "js", distPrefix + "/node/"},
 		service{"rails", "rb", distPrefix + "/rails/"},
+		service{"php-apache", "php", distPrefix + "/php-apache/"},
 	}
 	defaultOptions = []Option{
 		WithServices(srv),

@@ -101,3 +101,8 @@ Removing container...
 ```sh
 $ go run main.go --service java --template sample/xxe data/xxe/test.xml
 ```
+
+### テンプレートからソースコードのみを生成する  
+```sh
+$ go run main.go --service rails --template mytemplate --only-create-source [Payload]
+```

@@ -66,3 +66,9 @@ services:
       dockerfile: ${DIST_PREFIX}/php-apache/Dockerfile
     ports:
       - '8001:8001'
+  spring:
+    build: 
+      context: .
+      dockerfile: ${DIST_PREFIX}/spring/Dockerfile
+    ports:
+      - '8080:8080'

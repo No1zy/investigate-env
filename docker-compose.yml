@@ -45,6 +45,19 @@ services:
       APP_DATABASE_PASSWORD: 'development'
     depends_on:
       - mysql
+  php-apache:
+    build: 
+      context: .
+      dockerfile: ${DIST_PREFIX}/php-apache/Dockerfile
+    ports:
+      - '8001:8001'
+  spring:
+    build: 
+      context: .
+      dockerfile: ${DIST_PREFIX}/spring/Dockerfile
+    ports:
+      - '8080:8080'
+
   mysql:
     build: 
       context: .
@@ -60,15 +73,11 @@ services:
       - '3306:3306'
     volumes:
       - ./mysql/db:/docker-entrypoint-initdb.d
-  php-apache:
+  nginx:
     build: 
       context: .
-      dockerfile: ${DIST_PREFIX}/php-apache/Dockerfile
+      dockerfile: ${DIST_PREFIX}/nginx/Dockerfile
     ports:
-      - '8001:8001'
-  spring:
-    build: 
-      context: .
-      dockerfile: ${DIST_PREFIX}/spring/Dockerfile
-    ports:
-      - '8080:8080'
+      - "80:80"
+    depends_on:
+      - spring

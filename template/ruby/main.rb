@@ -1,6 +1,6 @@
 require 'uri'
 
-url = "{{ .URL }}"
+url = "{{ .VARIABLE }}"
 
 p uri = URI.parse(url)
 

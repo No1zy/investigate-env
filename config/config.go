@@ -1,9 +1,9 @@
 package config
 
-
 // Template variable
 type Variable struct {
-	URL string
+	//URL string
+	VARIABLE string
 }
 
 var Conf DockerCopomseConfig
@@ -15,4 +15,3 @@ type DockerCopomseConfig struct {
 type Service struct {
 	Name string
 }
-

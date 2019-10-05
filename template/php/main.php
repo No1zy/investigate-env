@@ -1,6 +1,6 @@
 <?php
 
-$url = "{{ .URL }}";
+$url = "{{ .VARIABLE }}";
 var_dump(parse_url($url));
 
 

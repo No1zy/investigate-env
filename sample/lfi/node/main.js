@@ -1,6 +1,6 @@
 const fs = require('fs')
 
-url = '{{ .URL }}'
+url = '{{ .VARIABLE }}'
 
 const params = new URL(url).searchParams
 base = '/data/'

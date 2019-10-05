@@ -1,6 +1,6 @@
 const url = require('url')
 
-const u = '{{ .URL }}'
+const u = '{{ .VARIABLE }}'
 
 const parsed_url1 = url.parse(u)
 

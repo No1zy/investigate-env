@@ -1,6 +1,6 @@
 import xml.etree.ElementTree as ET
 
-filename = '{{ .FILENAME }}'
+filename = '{{ .VARIABLE }}'
 
 tree = ET.parse(filename)
 root = tree.getroot()

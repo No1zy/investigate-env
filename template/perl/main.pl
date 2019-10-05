@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use URI;
 
-$url = '{{ .URL }}';
+$url = '{{ .VARIABLE }}';
 $u = URI->new($url);
 print 'scheme = ' . $u->scheme . "\n";
 print 'userinfo = ' . $u->userinfo . "\n";

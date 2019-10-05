@@ -11,7 +11,7 @@ import (
 
 func main() {
 
-	ua := "{{ .URL }}" //"https://example.com\uFF03bing.com"
+	ua := "{{ .VARIABLE }}" //"https://example.com\uFF03bing.com"
 
 	u, err := url.Parse(ua)
 	if err != nil {

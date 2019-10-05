@@ -9,7 +9,7 @@ import java.net.URL;
 public class Main {
     public static void main(String[] args) {
 
-        String strUrl = "{{ .URL }}"; //"https://example.com＃@bing.com";
+        String strUrl = "{{ .VARIABLE }}"; //"https://example.com＃@bing.com";
         try {
 
             URL url = new URL(strUrl);

@@ -1,6 +1,6 @@
 require 'rexml/document'
 
-xml = File.open('{{ .FILENAME }}').read
+xml = File.open('{{ .VARIABLE }}').read
 doc = REXML::Document.new(xml)
 
 entities = doc.doctype.entities

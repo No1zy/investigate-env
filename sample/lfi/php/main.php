@@ -1,7 +1,7 @@
 <?php
 
 
-$url = "{{ .URL }}";
+$url = "{{ .VARIABLE }}";
 echo "URL: ". $url ."\n";
 // check if argument is a valid URL
 if(filter_var($url, FILTER_VALIDATE_URL)) {

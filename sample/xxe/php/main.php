@@ -1,5 +1,5 @@
 <?php
-$filename = "{{ .FILENAME }}";
+$filename = "{{ .VARIABLE }}";
 
 $doc = new DOMDocument();
 $doc->substituteEntities = true;

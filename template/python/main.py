@@ -1,6 +1,6 @@
 from urllib.parse import urlparse
 
-url = '{{ .URL }}'
+url = '{{ .VARIABLE }}'
 
 u = urlparse(url)
 

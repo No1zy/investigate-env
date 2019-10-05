@@ -2,7 +2,7 @@ import os
 
 PREFIX = 'data/'
 
-path = '{{ .FILENAME }}'
+path = '{{ .VARIABLE }}'
 
 data_path = os.path.join(PREFIX, path)
 full_path = os.path.abspath(data_path)

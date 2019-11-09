@@ -1,0 +1,23 @@
+<html>
+<body>
+<div>
+<p id="txt"></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+<script type="text/javascript" charset="utf-8">
+  window.onload = function() {
+    var socket = io('http://localhost:6080/socket.io/', {transports: ['websocket']});
+    //var socket = io('http://localhost:5000', {transports: ['websocket']});
+    socket.on('connect', function () {
+      socket.send('hi');
+    });
+
+    socket.on('message', function (msg) {
+      console.log(msg);
+      var txt = document.getElementById("txt");
+      txt.innerText = msg;
+    });
+  }
+</script>
+</body>
+</html>

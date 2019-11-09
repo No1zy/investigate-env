@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  node:
+    build: 
+      context: .
+      dockerfile: node/Dockerfile
+  flask:
+    build: 
+      context: .
+      dockerfile: flask/Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - SECRET_KEY=dfghmllapfeak
+  varnish:
+    build:
+      context: .
+      dockerfile: varnish/Dockerfile
+    ports:
+      - "6080:80"
+    depends_on:
+      - node
+      - flask
